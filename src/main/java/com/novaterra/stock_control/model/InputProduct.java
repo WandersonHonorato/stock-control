@@ -1,14 +1,7 @@
 package com.novaterra.stock_control.model;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,22 +12,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "ENTRADA PRODUTOS")
+@Table(name = "ENTRADA_PRODUTOS")
 public class InputProduct {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
 
-    @Column(nullable = false)
+    @NotNull(message = "A data de entrada é obrigatória")
+    @Column(name = "DATA_ENTRADA", nullable = false)
     private LocalDateTime dataEntrada;
 
-    @Column(nullable = false)
+    @NotNull(message = "O preço unitário é obrigatório")
+    @Column(name = "PRECO_UNITARIO", nullable = false)
     private Double precoUnitario;
 
-    @Column(nullable = false)
+    @NotNull(message = "A quantidade é obrigatória")
+    @Column(name = "QUANTIDADE", nullable = false)
     private Integer quantidade;
 }
